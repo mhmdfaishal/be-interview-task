@@ -1,0 +1,433 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "BackEnd Interview",
+    "description": "BackEnd Interview Task",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9100",
+      "description": "Local Server"
+    }
+  ],
+  "components": {
+    "schemas": {
+    },
+    "parameters": {
+    },
+    "responses": {
+      "NotFound": {
+        "description": "Resources not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Resources not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "IllegalInput": {
+        "description": "Illegal input for operation."
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme.",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/analyze/file": {
+      "post": {
+        "description": "Analyze File",
+        "tags": [
+          "Virus Total"
+        ],
+        "parameters": [
+          {
+            "name": "x-apikey",
+            "in": "header",
+            "description": "API Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "8e87d9de16c437b9182e6a382276a96d15cb19fd34145a175f015260eb8ed8f2"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Payload",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response of the Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "id": {
+                              "example": "NWFkMjdhZmYyN2RkNzY4MTg5YmU5YzAwYzdlN2EwYWY6MTY3ODAwMjc2NQ==",
+                              "type": "string"
+                            },
+                            "links": {
+                              "properties": {
+                                "self": {
+                                  "example": "https://www.virustotal.com/api/v3/analyses/NWFkMjdhZmYyN2RkNzY4MTg5YmU5YzAwYzdlN2EwYWY6MTY3ODAwMjc2NQ==",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": {
+                              "example": "analysis",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "example": "File uploaded successfully",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": true,
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "message",
+                    "status"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/result/{id}": {
+      "get": {
+        "description": "Get Analysis Result",
+        "tags": [
+          "Virus Total"
+        ],
+        "parameters": [
+          {
+            "name": "x-apikey",
+            "in": "header",
+            "description": "API Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "8e87d9de16c437b9182e6a382276a96d15cb19fd34145a175f015260eb8ed8f2"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "if not stated, will occur error",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "OTA3OTE2MmQzNWEwZWQ1MjcxM2JiOWIyNmRhZTFkNzc6MTY3ODAwMTg0Mg=="
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response of the Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "attributes": {
+                              "type" : "object",
+                              "properties" : {
+                                "date" : {
+                                  "type" : "number",
+                                  "example" : 1678001842
+                                },
+                                "results" : {
+                                  "type" : "object",
+                                  "properties" : {
+                                    "ALYac" : {
+                                      "type": "object",
+                                      "properties": {
+                                        "category": {
+                                          "type": "string",
+                                          "example": "undetected"
+                                        },
+                                        "engine_name": {
+                                          "type": "string",
+                                          "example": "ALYac"
+                                        },
+                                        "engine_update": {
+                                          "type": "string",
+                                          "example": "20230305"
+                                        },
+                                        "engine_version" : {
+                                          "type": "string",
+                                          "example": "1.1.3.1"
+                                        },
+                                        "method": {
+                                          "type": "string",
+                                          "example": "blacklist"
+                                        },
+                                        "result": {
+                                          "type": "string",
+                                          "example": null
+                                        }
+                                      }
+                                    },
+                                    "APEX" : {
+                                      "type": "object",
+                                      "properties": {
+                                        "category": {
+                                          "type": "string",
+                                          "example": "undetected"
+                                        },
+                                        "engine_name": {
+                                          "type": "string",
+                                          "example": "APEX"
+                                        },
+                                        "engine_update": {
+                                          "type": "string",
+                                          "example": "20230305"
+                                        },
+                                        "engine_version" : {
+                                          "type": "string",
+                                          "example": "1.0"
+                                        },
+                                        "method": {
+                                          "type": "string",
+                                          "example": "blacklist"
+                                        },
+                                        "result": {
+                                          "type": "string",
+                                          "example": null
+                                        }
+                                      }
+                                    },
+                                    "AVG" : {
+                                      "type": "object",
+                                      "properties": {
+                                        "category": {
+                                          "type": "string",
+                                          "example": "undetected"
+                                        },
+                                        "engine_name": {
+                                          "type": "string",
+                                          "example": "AVG"
+                                        },
+                                        "engine_update": {
+                                          "type": "string",
+                                          "example": "20230305"
+                                        },
+                                        "engine_version" : {
+                                          "type": "string",
+                                          "example": "20.1.3042"
+                                        },
+                                        "method": {
+                                          "type": "string",
+                                          "example": "blacklist"
+                                        },
+                                        "result": {
+                                          "type": "string",
+                                          "example": null
+                                        }
+                                      }
+                                    },
+                                    "Avast" : {
+                                      "type": "object",
+                                      "properties": {
+                                        "category": {
+                                          "type": "string",
+                                          "example": "undetected"
+                                        },
+                                        "engine_name": {
+                                          "type": "string",
+                                          "example": "Avast"
+                                        },
+                                        "engine_update": {
+                                          "type": "string",
+                                          "example": "20230305"
+                                        },
+                                        "engine_version" : {
+                                          "type": "string",
+                                          "example": "20.4.2434"
+                                        },
+                                        "method": {
+                                          "type": "string",
+                                          "example": "blacklist"
+                                        },
+                                        "result": {
+                                          "type": "string",
+                                          "example": null
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "stats" : {
+                                  "type": "object",
+                                  "properties" : {
+                                    "confirmed-timeout": {
+                                      "type": "number",
+                                      "example": 0
+                                    },
+                                    "failure": {
+                                      "type": "number",
+                                      "example": 0
+                                    },
+                                    "harmless": {
+                                      "type": "number",
+                                      "example": 0
+                                    },
+                                    "malicious": {
+                                      "type": "number",
+                                      "example": 0
+                                    },
+                                    "suspicious": {
+                                      "type": "number",
+                                      "example": 0
+                                    },
+                                    "timeout": {
+                                      "type": "number",
+                                      "example": 0
+                                    },
+                                    "type-unsupported": {
+                                      "type": "number",
+                                      "example": 0
+                                    },
+                                    "undetected": {
+                                      "type": "number",
+                                      "example": 5
+                                    }
+                                  }
+                                },
+                                "status" : {
+                                  "type": "string",
+                                  "example": "completed"
+                                }
+                              }
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "OTA3OTE2MmQzNWEwZWQ1MjcxM2JiOWIyNmRhZTFkNzc6MTY3ODAwMTg0Mg=="
+                            },
+                            "links": {
+                              "type": "object",
+                              "properties": {
+                                "self": {
+                                  "type": "string",
+                                  "example": "https://www.virustotal.com/api/v3/analyses/OTA3OTE2MmQzNWEwZWQ1MjcxM2JiOWIyNmRhZTFkNzc6MTY3ODAwMTg0Mg=="
+                                },
+                                "item": {
+                                  "type": "string",
+                                  "example": "https://www.virustotal.com/api/v3/files/OTA3OTE2MmQzNWEwZWQ1MjcxM2JiOWIyNmRhZTFkNzc6MTY3ODAwMTg0Mg=="
+                                }
+                              }
+                            },
+                            "type": {
+                              "type": "string",
+                              "example": "analysis"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "file_info": {
+                              "type": "object",
+                              "properties": {
+                                "md5": {
+                                  "type": "string",
+                                  "example": "e3b0c44298fc1c149afbf4c8996fb924"
+                                },
+                                "sha1": {
+                                  "type": "string",
+                                  "example": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+                                },
+                                "sha256": {
+                                  "type": "string",
+                                  "example": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                                },
+                                "size": {
+                                  "type": "number",
+                                  "example": 181674
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "example": "Result fetched successfully",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": true,
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "message",
+                    "status"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
