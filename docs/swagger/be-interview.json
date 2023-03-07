@@ -7,8 +7,8 @@
   },
   "servers": [
     {
-      "url": "http://localhost:9100",
-      "description": "Local Server"
+      "url": "http://34.126.129.8:9100",
+      "description": "Deployed Server"
     }
   ],
   "components": {
